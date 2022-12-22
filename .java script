@@ -1,0 +1,30 @@
+Vue.component('upload-gambar', {
+	template: `
+  <span @click="openUpload">
+  	<img ref="preview" :src="showImage" style="width: 200px; height: 200px">
+    <input ref="input" @change="previewImage" type="file" id="file-field" accept="image/*" style="display: none"/>
+  </span>`,
+  
+  data: () => { return {
+    showImage: 'https://semantic-ui.com/images/wireframe/square-image.png'
+  }},
+  
+  methods: {
+    openUpload () {
+      this.$refs.input.click()      
+    },
+    
+    previewImage () {
+      var reader = new FileReader()
+      reader.readAsDataURL(this.$refs.input.files[0])
+      
+      reader.onload = e => {
+        this.showImage = e.target.result
+      } 
+    }
+  }
+});
+
+new Vue({
+  el: '#app'
+})
